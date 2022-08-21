@@ -13,7 +13,7 @@ import org.joda.time.{DateTime, DateTimeZone}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.must.Matchers
 
-class HealthRoutesSpec extends AnyFlatSpec with Matchers with MockedRoutesIO {
+class ServiceRoutesSpec extends AnyFlatSpec with Matchers with MockedRoutesIO {
 
   "GET /service/info" should "return a successful response containing service information" in runIO {
 
