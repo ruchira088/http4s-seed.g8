@@ -26,18 +26,18 @@ object ExceptionHandler {
       }
     }
 
-  def errorLogger[F[_]: Sync](response: Response[F], throwable: Throwable): F[Unit] =
+  private def errorLogger[F[_]: Sync](response: Response[F], throwable: Throwable): F[Unit] =
     if (response.status >= Status.InternalServerError)
       logger.error(s"\${response.status.code} status error code was returned.", throwable)
     else logger.warn(throwable.getMessage)
 
-  val throwableStatusMapper: Throwable => Status = {
+  private val throwableStatusMapper: Throwable => Status = {
     case _: ResourceNotFoundException => Status.NotFound
 
     case _ => Status.InternalServerError
   }
 
-  val throwableResponseBody: Throwable => ErrorResponse = {
+  private val throwableResponseBody: Throwable => ErrorResponse = {
     case decodingFailure: DecodingFailure =>
       ErrorResponse {
         NonEmptyList.one {
@@ -49,12 +49,12 @@ object ExceptionHandler {
       Option(throwable.getCause).fold(ErrorResponse(NonEmptyList.of(throwable.getMessage)))(throwableResponseBody)
   }
 
-  def errorResponseMapper[F[_]](throwable: Throwable)(response: Response[F]): Response[F] =
+  private def errorResponseMapper[F[_]](throwable: Throwable)(response: Response[F]): Response[F] =
     throwable match {
       case _ => response
     }
 
-  def entityResponseGenerator[F[_]](throwable: Throwable): EntityResponseGenerator[F, F] =
+  private def entityResponseGenerator[F[_]](throwable: Throwable): EntityResponseGenerator[F, F] =
     new EntityResponseGenerator[F, F] {
       override def status: Status = throwableStatusMapper(throwable)
 
