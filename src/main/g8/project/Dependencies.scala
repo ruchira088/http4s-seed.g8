@@ -2,7 +2,7 @@ import sbt._
 
 object Dependencies
 {
-  val ScalaVersion = "2.13.12"
+  val ScalaVersion = "2.13.13"
   val Http4sVersion = "0.23.25"
   val CirceVersion = "0.14.6"
 
@@ -20,13 +20,13 @@ object Dependencies
 
   lazy val jodaTime = "joda-time" % "joda-time" % "2.12.7"
 
-  lazy val pureconfig = "com.github.pureconfig" %% "pureconfig" % "0.17.5"
+  lazy val pureconfig = "com.github.pureconfig" %% "pureconfig" % "0.17.6"
 
-  lazy val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.4.14"
+  lazy val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.5.0"
 
   lazy val scalaLogging = "com.typesafe.scala-logging" %% "scala-logging" % "3.9.5"
 
-  lazy val kindProjector = "org.typelevel" %% "kind-projector" % "0.13.2" cross CrossVersion.full
+  lazy val kindProjector = "org.typelevel" %% "kind-projector" % "0.13.3" cross CrossVersion.full
 
   lazy val betterMonadicFor = "com.olegpy" %% "better-monadic-for" % "0.3.1"
 
