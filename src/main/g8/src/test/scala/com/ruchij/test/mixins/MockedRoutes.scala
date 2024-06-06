@@ -6,9 +6,9 @@ import com.ruchij.web.Routes
 import fs2.compression.Compression
 import org.http4s.HttpApp
 import org.scalamock.scalatest.MockFactory
-import org.scalatest.OneInstancePerTest
+import org.scalatest.{OneInstancePerTest, TestSuite}
 
-trait MockedRoutes[F[_]] extends MockFactory with OneInstancePerTest {
+trait MockedRoutes[F[_]] extends MockFactory with OneInstancePerTest { self: TestSuite =>
 
   val healthService: HealthService[F] = mock[HealthService[F]]
 
