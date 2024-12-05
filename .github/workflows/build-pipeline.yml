@@ -59,6 +59,10 @@ jobs:
 
   publish-docker-image:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+
     needs:
       - compile-and-test
 
@@ -121,6 +125,10 @@ jobs:
 
   deploy-to-k8s:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+
     needs:
       - publish-docker-image
 
