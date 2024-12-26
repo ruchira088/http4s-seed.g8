@@ -1,4 +1,4 @@
-name: build pipeline
+name: http4s seed pipeline
 
 on:
   push:
