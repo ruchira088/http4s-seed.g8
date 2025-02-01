@@ -23,6 +23,9 @@ jobs:
           java-version: 21
           distribution: temurin
 
+      - name: Set up sbt
+        uses: sbt/setup-sbt@v1
+
       - name: Cache dependencies
         uses: actions/cache@v4
         with:
@@ -41,21 +44,6 @@ jobs:
       - name: Execute test suite
         run: cd target/g8 && sbt clean test
 
-      - name: Send failure Slack message
-        if: failure()
-        uses: slackapi/slack-github-action@v1.25.0
-        with:
-          channel-id: C02HYP398KS
-          slack-message: |
-            :x: *FAILURE*
-            *${{ github.repository }}*
-            *Job:* compile-and-test
-            *Branch:* ${{ github.ref }}
-            *Commit:* `${{ github.sha }}`
-            *Last Commit Message:* ${{ github.event.head_commit.message }}
-            *URL:* ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-        env:
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
 
   publish-docker-image:
     runs-on: ubuntu-latest
@@ -82,6 +70,9 @@ jobs:
           java-version: 21
           distribution: temurin
 
+      - name: Set up sbt
+        uses: sbt/setup-sbt@v1
+
       - name: Cache dependencies
         uses: actions/cache@v4
         with:
@@ -107,21 +98,6 @@ jobs:
       - name: Build and publish Docker image
         run: ansible-playbook target/g8/playbooks/build-and-publish-docker-image.yml
 
-      - name: Send failure Slack message
-        if: failure()
-        uses: slackapi/slack-github-action@v1.25.0
-        with:
-          channel-id: C02HYP398KS
-          slack-message: |
-            :x: *FAILURE*
-            *${{ github.repository }}*
-            *Job:* build-and-publish-docker-image
-            *Branch:* ${{ github.ref }}
-            *Commit:* `${{ github.sha }}`
-            *Last Commit Message:* ${{ github.event.head_commit.message }}
-            *URL:* ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-        env:
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
 
   deploy-to-k8s:
     runs-on: ubuntu-latest
@@ -141,6 +117,9 @@ jobs:
         with:
           java-version: 21
           distribution: temurin
+
+      - name: Set up sbt
+        uses: sbt/setup-sbt@v1
 
       - name: Cache dependencies
         uses: actions/cache@v4
@@ -167,32 +146,18 @@ jobs:
       - name: Deploy to K8s server
         run: ansible-playbook target/g8/playbooks/k8s-deploy.yml
 
-      - name: Send failure Slack message
-        if: failure()
-        uses: slackapi/slack-github-action@v1.25.0
-        with:
-          channel-id: C02HYP398KS
-          slack-message: |
-            :x: *FAILURE*
-            *${{ github.repository }}*
-            *Job:* deploy-to-k8s
-            *Branch:* ${{ github.ref }}
-            *Commit:* `${{ github.sha }}`
-            *Last Commit Message:* ${{ github.event.head_commit.message }}
-            *URL:* ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-        env:
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+  send-notification:
+    runs-on: ubuntu-latest
+    if: always()
 
-      - name: Send successful Slack message
-        uses: slackapi/slack-github-action@v1.25.0
-        with:
-          channel-id: C02HYP398KS
-          slack-message: |
-            :white_check_mark: *SUCCESS*
-            *${{ github.repository }}*
-            *Branch:* ${{ github.ref }}
-            *Commit:* `${{ github.sha }}`
-            *Last Commit Message:* ${{ github.event.head_commit.message }}
-            *URL:* ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-        env:
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+    permissions:
+      id-token: write
+
+    needs:
+      - compile-and-test
+      - publish-docker-image
+      - deploy-to-k8s
+
+    steps:
+      - name: Send Slack notification
+        uses: ruchira088/slack-github-action@v1

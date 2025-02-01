@@ -2,7 +2,7 @@ import sbt._
 
 object Dependencies
 {
-  val ScalaVersion = "2.13.15"
+  val ScalaVersion = "2.13.16"
   val Http4sVersion = "0.23.30"
   val CirceVersion = "0.14.10"
 
@@ -22,7 +22,7 @@ object Dependencies
 
   lazy val pureconfig = "com.github.pureconfig" %% "pureconfig" % "0.17.8"
 
-  lazy val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.5.15"
+  lazy val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.5.16"
 
   lazy val scalaLogging = "com.typesafe.scala-logging" %% "scala-logging" % "3.9.5"
 
@@ -32,7 +32,7 @@ object Dependencies
 
   lazy val scalaTest = "org.scalatest" %% "scalatest" % "3.2.19"
 
-  lazy val scalaMock = "org.scalamock" %% "scalamock" % "6.0.0"
+  lazy val scalaMock = "org.scalamock" %% "scalamock" % "6.1.1"
 
   lazy val pegdown = "org.pegdown" % "pegdown" % "1.6.0"
 }
