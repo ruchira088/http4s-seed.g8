@@ -3,7 +3,7 @@ package com.ruchij.web.middleware
 import org.http4s.server.middleware.{CORS, CORSPolicy}
 
 object Cors {
-  def hostRegex(host: String): Set[String] =
+  private def hostRegex(host: String): Set[String] =
     Set(host)
       .flatMap(origin => if (origin.startsWith("*.")) Set(origin.substring(2), origin) else Set(origin))
       .map(origin => s"https?://\${origin.replace(".", "\\\\.").replace("*", ".*")}(:\\\\d+)?\$\$")
