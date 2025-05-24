@@ -4,7 +4,7 @@ object Dependencies
 {
   val ScalaVersion = "2.13.16"
   val Http4sVersion = "0.23.30"
-  val CirceVersion = "0.14.10"
+  val CirceVersion = "0.14.13"
 
   lazy val http4sDsl = "org.http4s" %% "http4s-dsl" % Http4sVersion
 
@@ -18,11 +18,11 @@ object Dependencies
 
   lazy val circeLiteral = "io.circe" %% "circe-literal" % CirceVersion
 
-  lazy val jodaTime = "joda-time" % "joda-time" % "2.13.0"
+  lazy val jodaTime = "joda-time" % "joda-time" % "2.14.0"
 
-  lazy val pureconfig = "com.github.pureconfig" %% "pureconfig" % "0.17.8"
+  lazy val pureconfig = "com.github.pureconfig" %% "pureconfig" % "0.17.9"
 
-  lazy val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.5.16"
+  lazy val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.5.18"
 
   lazy val scalaLogging = "com.typesafe.scala-logging" %% "scala-logging" % "3.9.5"
 
@@ -32,7 +32,7 @@ object Dependencies
 
   lazy val scalaTest = "org.scalatest" %% "scalatest" % "3.2.19"
 
-  lazy val scalaMock = "org.scalamock" %% "scalamock" % "6.1.1"
+  lazy val scalaMock = "org.scalamock" %% "scalamock" % "7.3.2"
 
   lazy val pegdown = "org.pegdown" % "pegdown" % "1.6.0"
 }
