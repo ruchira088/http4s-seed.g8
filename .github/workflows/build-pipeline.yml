@@ -86,7 +86,7 @@ jobs:
             http4s-seed-${{ runner.os }}
 
       - name: Create new sbt project from g8 template
-        run: sbt
+        run: sbt g8
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
