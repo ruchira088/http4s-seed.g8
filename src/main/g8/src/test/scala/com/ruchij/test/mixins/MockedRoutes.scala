@@ -16,6 +16,6 @@ trait MockedRoutes[F[_]] extends MockFactory with OneInstancePerTest { self: Tes
   val compression: Compression[F]
 
   def createRoutes: HttpApp[F] =
-    Routes[F](healthService)(sync, compression)
+    Routes[F](healthService, Set.empty)(sync, compression)
 
 }

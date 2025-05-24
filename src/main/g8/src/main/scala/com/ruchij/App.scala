@@ -17,7 +17,7 @@ object App extends IOApp {
 
       exitCode <-
         EmberServerBuilder.default[IO]
-          .withHttpApp(Routes(healthService))
+          .withHttpApp(Routes(healthService, serviceConfiguration.httpConfiguration.allowedOriginHosts))
           .withHost(serviceConfiguration.httpConfiguration.host)
           .withPort(serviceConfiguration.httpConfiguration.port)
           .build

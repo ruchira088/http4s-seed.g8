@@ -19,15 +19,21 @@ class ServiceConfigurationSpec extends AnyFlatSpec with Matchers {
 
             port = 80
             port = \$\${?HTTP_PORT}
+
+            allowed-origins = "localhost,*.home.ruchij.com,*.dev.ruchij.com"
+            allowed-origins = \$\${?HTTP_ALLOWED_ORIGINS}
           }
         """
       }
 
-    ServiceConfiguration.parse[IO](configObjectSource).flatMap {
-      serviceConfiguration =>
-        IO.delay {
-          serviceConfiguration.httpConfiguration mustBe HttpConfiguration(ipv4"127.0.0.1", port"80")
-        }
+    ServiceConfiguration.parse[IO](configObjectSource).flatMap { serviceConfiguration =>
+      IO.delay {
+        serviceConfiguration.httpConfiguration mustBe HttpConfiguration(
+          ipv4"127.0.0.1",
+          port"80",
+          Some(Set("localhost", "*.home.ruchij.com", "*.dev.ruchij.com"))
+        )
+      }
     }
   }
 
@@ -39,6 +45,9 @@ class ServiceConfigurationSpec extends AnyFlatSpec with Matchers {
             host = "0.0.0.0"
 
             port = my-invalid-port
+
+            allowed-origins = "localhost,*.home.ruchij.com,*.dev.ruchij.com"
+            allowed-origins = \$\${?HTTP_ALLOWED_ORIGINS}
           }
         """
       }
