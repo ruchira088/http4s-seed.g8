@@ -28,8 +28,8 @@ object ExceptionHandler {
 
   private def errorLogger[F[_]: Sync](response: Response[F], throwable: Throwable): F[Unit] =
     if (response.status >= Status.InternalServerError)
-      logger.error(s"\${response.status.code} status error code was returned.", throwable)
-    else logger.warn(throwable.getMessage)
+      logger.error[F](s"\${response.status.code} status error code was returned.", throwable)
+    else logger.warn[F](throwable.getMessage)
 
   private val throwableStatusMapper: Throwable => Status = {
     case _: ResourceNotFoundException => Status.NotFound
