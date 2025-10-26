@@ -57,7 +57,8 @@ lazy val rootDependencies =
     jodaTime,
     pureconfig,
     logbackClassic,
-    scalaLogging
+    scalaLogging,
+    logstashLogbackEncoder
   )
 
 lazy val rootTestDependencies =

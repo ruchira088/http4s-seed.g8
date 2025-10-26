@@ -26,6 +26,8 @@ object Dependencies
 
   lazy val scalaLogging = "com.typesafe.scala-logging" %% "scala-logging" % "3.9.6"
 
+  lazy val logstashLogbackEncoder = "net.logstash.logback" % "logstash-logback-encoder" % "8.1"
+
   lazy val kindProjector = "org.typelevel" %% "kind-projector" % "0.13.4" cross CrossVersion.full
 
   lazy val betterMonadicFor = "com.olegpy" %% "better-monadic-for" % "0.3.1"
