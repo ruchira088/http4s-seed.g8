@@ -1,4 +1,4 @@
-FROM openjdk:21-jdk-slim
+FROM openjdk:25-jdk
 
 RUN apt-get update && \
     apt-get install apt-transport-https bc ca-certificates software-properties-common -y
